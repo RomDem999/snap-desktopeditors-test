@@ -1,0 +1,197 @@
+name: oo-de-test
+version: "7.0.1"
+summary: "An office suite that allowing to create, view and edit local documents."
+description: "OO Desktop Editors is a free office suite that combines text, spreadsheet and presentation editors allowing to create, view and edit documents stored on your Windows/Linux PC or Mac without an Internet connection. It is fully compatible with Office Open XML formats: .docx, .xlsx, .pptx."
+grade: stable
+confinement: strict
+base: core20
+icon: icons/asc-de-256.png
+compression: lzo
+architectures:
+  - amd64
+
+layout:
+  /etc/fonts:
+    bind: $SNAP/etc/fonts
+  /usr/share/icons:
+    bind: $SNAP/usr/share/icons
+  /usr/bin/wget:
+    bind-file: $SNAP/usr/bin/wget
+  /usr/lib/x86_64-linux-gnu/libpsl.so.5:
+    symlink: $SNAP/usr/lib/x86_64-linux-gnu/libpsl.so.5
+
+plugs:
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/share/themes
+    default-provider: gtk-common-themes
+
+apps:
+  oo-de-test:
+    command: usr/bin/desktopeditors
+    common-id: org.oo.desktopeditors
+    extensions:
+      - gnome-3-38
+    desktop: usr/share/applications/onlyoffice-desktopeditors.desktop
+    environment:
+      DISABLE_WAYLAND: 1
+    plugs:
+      - audio-playback
+      - browser-support
+      - cups-control
+      - desktop
+      - gsettings
+      - home
+      - locale-control
+      - network
+      - opengl
+      - removable-media
+      - unity7
+      - x11
+
+parts:
+  onlyoffice-desktopeditors:
+    plugin: dump
+    source: http://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors_7.0.1_amd64.deb
+    source-type: deb
+    stage-packages:
+      - on amd64:
+        - adwaita-icon-theme
+        - curl
+        - dmz-cursor-theme
+        - fcitx-frontend-gtk3
+        - fonts-crosextra-carlito
+        - fonts-dejavu
+        - fonts-liberation
+        - fonts-opensymbol
+        - fonts-takao-gothic
+        - gsettings-desktop-schemas
+        - gsettings-ubuntu-schemas
+        - ibus-gtk3
+        - libasyncns0
+        - libatk-adaptor
+        - libc6
+        - libcairo2
+        - libcanberra-gtk3-module
+        - libcomerr2
+        - libcurl4
+        - libcurl3-gnutls
+        - libffi7
+        - libflac8
+        - libgail-3-0
+        - libgcc1
+        - libgconf-2-4
+        - libgcrypt20
+        - libgl1-mesa-dri
+        - libglib2.0-0
+        - libgpg-error0
+        - libgsettings-qt1
+        - libgstreamer-plugins-base1.0-0
+        - libgstreamer1.0-0
+        - libgtk-3-0
+        - libgtk-3-bin
+        - libgtkglext1
+        - liblzma5
+        - libnss3
+        - liborc-0.4-0
+        - libpcre3
+        - libpulse0
+        - libqt5qml5
+        - libqt5quick5
+        - libselinux1
+        - libsndfile1
+        - libstdc++6
+        - libsystemd0
+        - libuuid1
+        - libvorbisenc2
+        - libxcb-icccm4
+        - libxcb-image0
+        - libxcb-keysyms1
+        - libxcb-randr0
+        - libxcb-render-util0
+        - libxcb-shape0
+        - libxcb-util1
+        - libxcb-xkb1
+        - libxkbcommon-x11-0
+        - libxml2
+        - libxss1
+        - locales-all
+        - overlay-scrollbar-gtk2
+        - packagekit-gtk3-module
+        - ttf-mscorefonts-installer
+        - unity-gtk2-module
+        - wget
+        - x11-common
+        - zlib1g
+      - else fail
+    override-build: |
+      snapcraftctl build
+      mv $SNAPCRAFT_PART_INSTALL/usr/bin/desktopeditors $SNAPCRAFT_PART_INSTALL/usr/bin/desktopeditors-old &&
+      sed 's|=onlyoffice-desktopeditors|\=${SNAP}/opt/onlyoffice/desktopeditors/asc-de-256.png|g' -i $SNAPCRAFT_PART_INSTALL/usr/share/applications/onlyoffice-desktopeditors.desktop
+      echo "[Icon Theme]\nInherits=DMZ-Black" > $SNAPCRAFT_PART_INSTALL/usr/share/icons/default/index.theme
+      
+  gstreamer:
+    plugin: nil
+    stage-packages:
+      - gstreamer1.0-gtk3
+      - gstreamer1.0-libav
+      - gstreamer1.0-plugins-bad
+      - gstreamer1.0-plugins-base
+      - gstreamer1.0-plugins-good
+      - gstreamer1.0-pulseaudio
+      - gstreamer1.0-x
+      - libavcodec58
+      - libavfilter7
+      - libavformat58
+      - libavresample4
+      - libavutil56
+      - libcairo-gobject2
+      - libcrystalhd3
+      - libde265-0
+      - libdv4
+      - libfaad2
+      - libffi7
+      - libgpm2
+      - libgstreamer-plugins-bad1.0-0
+      - libgstreamer-plugins-good1.0-0
+      - libmp3lame0
+      - libmodplug1
+      - libogg0
+      - libopenal1
+      - libopenal-data
+      - libopencv-core4.2
+      - libopencv-imgproc4.2
+      - libopenjp2-7
+      - libpostproc55
+      - libslang2
+      - libsnappy1v5
+      - libsoxr0
+      - libswresample3
+      - libswscale5
+      - libtheora0
+      - libtwolame0
+      - libv4l-0
+      - libva2
+      - libvorbis0a
+      - libvpx6
+      - libwavpack1
+      - libwebp6
+      - libx264-155
+      - libx265-179
+      - libxvidcore4
+      - libzvbi0
+
+#    install: |
+#      mv $SNAPCRAFT_PART_INSTALL/opt/onlyoffice/desktopeditors/converter/x2t $SNAPCRAFT_PART_INSTALL/opt/onlyoffice/desktopeditors/converter/x2t.bin
+
+#  mscore-fonts:
+#    plugin: dump
+#    source: https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
+#    source-type: rpm
+
+  starter:
+    plugin: dump
+    source: ./bin/
+    organize:
+      run-desktopeditors.sh: usr/bin/desktopeditors
+#      x2t.sh: $SNAPCRAFT_PART_INSTALL/opt/onlyoffice/desktopeditors/converter/x2t
