@@ -38,6 +38,7 @@ apps:
     plugs:
       - audio-playback
       - browser-support
+      - cups
       - cups-control
       - desktop
       - gsettings
