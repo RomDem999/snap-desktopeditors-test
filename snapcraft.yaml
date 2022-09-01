@@ -56,8 +56,8 @@ apps:
 parts:
   onlyoffice-desktopeditors:
     plugin: dump
-    source: https://s3.eu-west-1.amazonaws.com/repo-doc-onlyoffice-com/onlyoffice/testing/ubuntu/onlyoffice-desktopeditors_7.2.0-80_amd64.deb
     source-type: deb
+    source: https://s3.eu-west-1.amazonaws.com/repo-doc-onlyoffice-com/onlyoffice/testing/ubuntu/onlyoffice-desktopeditors_7.2.0-80_amd64.deb
     stage-packages:
       - on amd64:
         - adwaita-icon-theme
