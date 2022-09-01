@@ -4,7 +4,7 @@ summary: "An office suite that allowing to create, view and edit local documents
 description: "OO Desktop Editors is a free office suite that combines text, spreadsheet and presentation editors allowing to create, view and edit documents stored on your Windows/Linux PC or Mac without an Internet connection. It is fully compatible with Office Open XML formats: .docx, .xlsx, .pptx."
 grade: stable
 confinement: strict
-base: core20
+base: core22
 icon: icons/asc-de-256.png
 compression: lzo
 architectures:
@@ -35,7 +35,7 @@ apps:
     command: usr/bin/desktopeditors
     common-id: org.oo.desktopeditors
     extensions:
-      - gnome-3-38
+      - gnome
     desktop: usr/share/applications/onlyoffice-desktopeditors.desktop
     environment:
       DISABLE_WAYLAND: 1
