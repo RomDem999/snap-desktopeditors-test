@@ -35,24 +35,17 @@ export HOME=${HOME_DIR}
 export XKB_CONFIG_ROOT=$SNAP/usr/share/X11/xkb
 export QT_XKB_CONFIG_ROOT=$SNAP/usr/share/X11/xkb
 
-#migrate config dir
-if [ -f $SNAP_DATA/updated ]; then
-  #updated
-  if [ -f $SNAP_DATA/new-config ]; then
-    rm $SNAP_DATA/new-config
-  else
-    #from old config style
-    LAST_CONFIG=$(ls -a -t $SNAP_USER_DATA | grep .config- | head -1)
-    mv $SNAP_USER_DATA/$LAST_CONFIG/onlyoffice $SNAP_USER_DATA/.config/
-  fi
-  rm $SNAP_DATA/updated
-fi
-
 # XDG Config
-#export XDG_CONFIG_HOME=$SNAP_USER_DATA/.config-$SNAP_VERSION
 export XDG_CONFIG_HOME=$SNAP_USER_DATA/.config
 export XDG_CONFIG_DIRS=$SNAP/etc:$XDG_CONFIG_DIRS
 mkdir -p $XDG_CONFIG_HOME
+
+#migrate config
+if [ ! -f $XDG_CONFIG_HOME/onlyoffice/DesktopEditors.conf ]; then
+  mkdir -p $XDG_CONFIG_HOME/onlyoffice
+  LAST_CONFIG=$(ls -a -t $SNAP_USER_DATA | grep .config- | head -1)
+  mv $SNAP_USER_DATA/$LAST_CONFIG/onlyoffice/DesktopEditors.conf $XDG_CONFIG_HOME/onlyoffice
+fi
 
 # Note: this doesn't seem to work, QML's LocalStorage either ignores
 # or fails to use $SNAP_USER_DATA if defined here
