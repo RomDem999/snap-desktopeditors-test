@@ -1,3 +1,5 @@
 #!/bin/sh
 
-env > $SNAP_DATA/post-ref
+#env > $SNAP_DATA/post-ref
+echo "1" > $SNAP_DATA/updated
+chmod 666 $SNAP_DATA/updated

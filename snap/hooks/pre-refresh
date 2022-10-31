@@ -1,3 +1,5 @@
 #!/bin/sh
 
-env > $SNAP_DATA/pre-ref
+#env > $SNAP_DATA/pre-ref
+echo "1" > $SNAP_DATA/new-config
+chmod 666 $SNAP_DATA/new-config
