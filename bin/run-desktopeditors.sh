@@ -44,7 +44,9 @@ mkdir -p $XDG_CONFIG_HOME
 if [ ! -f $XDG_CONFIG_HOME/onlyoffice/DesktopEditors.conf ]; then
   mkdir -p $XDG_CONFIG_HOME/onlyoffice
   LAST_CONFIG=$(ls -a -t $SNAP_USER_DATA | grep .config- | head -1)
-  mv $SNAP_USER_DATA/$LAST_CONFIG/onlyoffice/DesktopEditors.conf $XDG_CONFIG_HOME/onlyoffice
+  if [ ! -z "${LAST_CONFIG}" ]; then
+    mv $SNAP_USER_DATA/$LAST_CONFIG/onlyoffice/DesktopEditors.conf $XDG_CONFIG_HOME/onlyoffice
+  fi
 fi
 
 # Note: this doesn't seem to work, QML's LocalStorage either ignores
