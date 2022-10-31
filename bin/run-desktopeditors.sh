@@ -43,7 +43,7 @@ if [ -f $SNAP_DATA/updated ]; then
   else
     #from old config style
     LAST_CONFIG=$(ls -a -t $SNAP_USER_DATA | grep .config- | head -1)
-    mv $SNAP_USER_DATA/$LAST_CONFIG $SNAP_USER_DATA/.config
+    mv $SNAP_USER_DATA/$LAST_CONFIG/onlyoffice $SNAP_USER_DATA/.config/
   fi
   rm $SNAP_DATA/updated
 fi
