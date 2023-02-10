@@ -61,6 +61,7 @@ parts:
       - on amd64:
         - adwaita-icon-theme
         - breeze-icon-theme
+        - breeze-gtk-theme
         - curl
         - dmz-cursor-theme
         - fcitx-frontend-gtk3
