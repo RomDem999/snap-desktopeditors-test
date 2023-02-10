@@ -73,6 +73,7 @@ parts:
         - gsettings-desktop-schemas
         - gsettings-ubuntu-schemas
         - ibus-gtk3
+        - kde-config-gtk-style
         - libasyncns0
         - libatk-adaptor
         - libc6
