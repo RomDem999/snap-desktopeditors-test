@@ -125,11 +125,6 @@ if [ ! -d "$XDG_RUNTIME_DIR" ]; then
 	mkdir -p $XDG_RUNTIME_DIR -m 700
 fi
 
-#Copy ibus files for input methods
-#if [ -d "$HOME/.config/ibus" ]; then
-#  cp -r $HOME/.config/ibus $XDG_CONFIG_HOME
-#fi
-
 #Create cache for input methods
 export GTK_IM_MODULE_FILE=$XDG_CACHE_HOME/immodules.cache
 if [ ! -f $GTK_IM_MODULE_FILE ]; then
