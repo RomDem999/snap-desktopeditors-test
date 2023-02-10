@@ -6,6 +6,7 @@ THEME=`gsettings get org.gnome.desktop.interface gtk-theme`
 case $THEME in
   *"Adwaita"*) ;;
   *"Ambiance"*) ;;
+  *"Breeze"*) ;;
   *"HighContrast"*) ;;
   *"Radiance"*) ;;
   *"Yaru"*) ;;
