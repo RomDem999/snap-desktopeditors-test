@@ -1,5 +1,5 @@
 name: oo-de-test
-version: "7.3.0"
+version: "7.4.1"
 summary: "An office suite that allowing to create, view and edit local documents."
 description: "OO Desktop Editors is a free office suite that combines text, spreadsheet and presentation editors allowing to create, view and edit documents stored on your Windows/Linux PC or Mac without an Internet connection. It is fully compatible with Office Open XML formats: .docx, .xlsx, .pptx."
 grade: stable
@@ -38,7 +38,17 @@ apps:
       - gnome
     desktop: usr/share/applications/onlyoffice-desktopeditors.desktop
     environment:
+      APP_DIR: $SNAP
       DISABLE_WAYLAND: 1
+      FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
+      FONTCONFIG_PATH: $SNAP/etc/fonts/config.d
+      GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$SNAP/gnome-platform/usr/lib/girepository-1.0:$SNAP/gnome-platform/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0
+      LC_ALL: C.UTF-8
+      LD_LIBRARY_PATH: $SNAP/usr/lib/$ARCH/gtk-3.0/modules:$SNAP/usr/lib/$ARCH/pulseaudio:$SNAP/usr/lib/$ARCH:$SNAP/opt/onlyoffice/desktopeditors:$SNAP/opt/onlyoffice/desktopeditors/converter:$LD_LIBRARY_PATH
+      QT_XKB_CONFIG_ROOT: $SNAP/usr/share/X11/xkb
+      XKB_CONFIG_ROOT: $SNAP/usr/share/X11/xkb
+      LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$ARCH/dri
+      LIBGL_ALWAYS_INDIRECT: 1
     plugs:
       - audio-playback
       - browser-support
@@ -56,12 +66,10 @@ apps:
 parts:
   onlyoffice-desktopeditors:
     plugin: dump
-    source: http://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors-7.3.0-x64.tar.gz
+    source: http://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors-7.4.1-x64.tar.xz
     stage-packages:
       - on amd64:
         - adwaita-icon-theme
-        - breeze-icon-theme
-        - breeze-gtk-theme
         - curl
         - dmz-cursor-theme
         - fcitx-frontend-gtk3
@@ -73,7 +81,6 @@ parts:
         - gsettings-desktop-schemas
         - gsettings-ubuntu-schemas
         - ibus-gtk3
-        - kde-config-gtk-style
         - libasyncns0
         - libatk-adaptor
         - libc6
@@ -86,7 +93,6 @@ parts:
         - libflac8
         - libgail-3-0
         - libgcc1
-        - libgconf-2-4
         - libgcrypt20
         - libgl1-mesa-dri
         - libglib2.0-0
@@ -132,8 +138,8 @@ parts:
       - else fail
     override-build: |
       craftctl default
-      mkdir -p $CRAFT_PART_INSTALL/opt/onlyoffice
-      mv $CRAFT_PART_INSTALL/desktopeditors $CRAFT_PART_INSTALL/opt/onlyoffice
+      mkdir -p $CRAFT_PART_INSTALL/opt/onlyoffice/desktopeditors
+      mv $CRAFT_PART_INSTALL/??????* app fonts $CRAFT_PART_INSTALL/opt/onlyoffice/desktopeditors
       mkdir -p $CRAFT_PART_INSTALL/usr/share/applications
       mv $CRAFT_PART_INSTALL/opt/onlyoffice/desktopeditors/app/onlyoffice-desktopeditors.desktop $CRAFT_PART_INSTALL/usr/share/applications/onlyoffice-desktopeditors.desktop
       sed 's|=onlyoffice-desktopeditors|\=${SNAP}/opt/onlyoffice/desktopeditors/asc-de-256.png|g' -i $CRAFT_PART_INSTALL/usr/share/applications/onlyoffice-desktopeditors.desktop
@@ -191,17 +197,20 @@ parts:
       - libxvidcore4
       - libzvbi0
 
-#    install: |
-#      mv $CRAFT_PART_INSTALL/opt/onlyoffice/desktopeditors/converter/x2t $CRAFT_PART_INSTALL/opt/onlyoffice/desktopeditors/converter/x2t.bin
-
-#  mscore-fonts:
-#    plugin: dump
-#    source: https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
-#    source-type: rpm
-
   starter:
     plugin: dump
     source: ./bin/
     organize:
       run-desktopeditors.sh: usr/bin/desktopeditors
-#      x2t.sh: $CRAFT_PART_INSTALL/opt/onlyoffice/desktopeditors/converter/x2t
+
+  cleanup:
+    after: [onlyoffice-desktopeditors]
+    plugin: nil
+    build-snaps: [core22, gtk-common-themes, gnome-42-2204]
+    override-prime: |
+      set -eux
+      for snap in "core22" "gtk-common-themes" "gnome-42-2204"; do
+        cd "/snap/$snap/current" && find . -type f,l -name *.so* -exec rm -f "$CRAFT_PRIME/{}" \;
+      done
+
+
