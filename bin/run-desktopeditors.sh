@@ -49,6 +49,10 @@ if [ ! -f $XDG_DATA_HOME/recently-used.xbel ]; then
     if [ -f $LAST_LOCAL_RECENTLY_USED ]; then
       mv $LAST_LOCAL_RECENTLY_USED $XDG_DATA_HOME
     fi
+    LAST_LOCAL_RECENTS=$SNAP_USER_DATA/$LAST_LOCAL/share/onlyoffice/desktopeditors/recents.xml
+    if [ -f $LAST_LOCAL_RECENTS ]; then
+      mv $LAST_LOCAL_RECENTS $XDG_DATA_HOME/onlyoffice/desktopeditors
+    fi
   fi
 fi
 
