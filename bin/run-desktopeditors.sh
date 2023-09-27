@@ -42,7 +42,7 @@ mkdir -p $XDG_DATA_HOME
 
 #migrate recent files
 if [ ! -f $XDG_DATA_HOME/recently-used.xbel ]; then
-  mkdir -p $XDG_DATA_HOME
+  mkdir -p $XDG_DATA_HOME/onlyoffice/desktopeditors
   LAST_LOCAL=$(ls -a -t $SNAP_USER_DATA | grep .local- | head -1)
   if [ ! -z "${LAST_LOCAL}" ]; then
     LAST_LOCAL_RECENTLY_USED=$SNAP_USER_DATA/$LAST_LOCAL/share/recently-used.xbel
