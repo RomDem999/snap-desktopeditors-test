@@ -47,7 +47,8 @@ if [ ! -f $XDG_DATA_HOME/recently-used.xbel ]; then
   if [ ! -z "${LAST_LOCAL}" ]; then
     LAST_LOCAL_RECENTLY_USED=$SNAP_USER_DATA/$LAST_LOCAL/share/recently-used.xbel
     if [ -f $LAST_LOCAL_RECENTLY_USED ]; then
-    mv $LAST_LOCAL_RECENTLY_USED $XDG_DATA_HOME
+      mv $LAST_LOCAL_RECENTLY_USED $XDG_DATA_HOME
+    fi
   fi
 fi
 
