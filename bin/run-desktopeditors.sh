@@ -36,7 +36,7 @@ fi
 export XDG_DATA_DIRS=$SNAP/usr/share:$XDG_DATA_DIRS
 
 # Set XDG_DATA_HOME to local path, dependent on snap version
-export XDG_DATA_HOME=$SNAP_USER_DATA/.local-$SNAP_VERSION/share
+export XDG_DATA_HOME=$SNAP_USER_DATA/.local/share
 export XDG_DATA_DIRS=$XDG_DATA_HOME:$XDG_DATA_DIRS
 mkdir -p $XDG_DATA_HOME
 
