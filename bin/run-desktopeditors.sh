@@ -57,7 +57,7 @@ if [ ! -f $XDG_DATA_HOME/recently-used.xbel ]; then
 fi
 
 # Set cache folder to local path, dependent on snap version
-export XDG_CACHE_HOME=$SNAP_USER_DATA/.cache
+export XDG_CACHE_HOME=$SNAP_USER_DATA/.cache-$SNAP_VERSION
 mkdir -p $XDG_CACHE_HOME
 
 # Not good, needed for fontconfig and themes
