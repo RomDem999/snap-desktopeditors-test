@@ -1,4 +1,5 @@
 [![License](https://img.shields.io/badge/License-GNU%20AGPL%20V3-green.svg?style=flat)](https://www.gnu.org/licenses/agpl-3.0.en.html) [![Snap Status](https://build.snapcraft.io/badge/OO/snap-desktopeditors.svg)](https://build.snapcraft.io/user/OO/snap-desktopeditors)
+[![OO Desktop Editors Test](https://snapcraft.io/oo-de-test/badge.svg)](https://snapcraft.io/oo-de-test)
 
 ## Overview
 
