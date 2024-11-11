@@ -5,6 +5,10 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
     steps:
     - uses: actions/checkout@v4
     - uses: snapcore/action-build@v1
+    - name: Deploy snap file
+        run: snapcraft upload ${{ steps.snapcraft.outputs.snap }} --release=edge
