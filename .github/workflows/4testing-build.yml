@@ -8,7 +8,12 @@ jobs:
     steps:
     - name: Check out Git repository
       uses: actions/checkout@v4
- 
+
+    - name: Replace Version and Build Number
+      id: repl
+      run: |
+        ls -la
+
     #- name: Build snap
     #  uses: snapcore/action-build@v1
     #  id: build
