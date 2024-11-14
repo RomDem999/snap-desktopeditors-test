@@ -30,17 +30,16 @@ jobs:
         sed -i -e '/source:/s|http://download.onlyoffice.com/install|https://s3.eu-west-1.amazonaws.com/repo-doc-onlyoffice-com|' ./snap/snapcraft.yaml
         sed -i -e '/source:/s|editors/linux|linux/generic|' ./snap/snapcraft.yaml
         sed -i -e "/source:/s|-x64|-${BUILD_NUMBER}-x86_64|" ./snap/snapcraft.yaml
-        cat ./snap/snapcraft.yaml
 
-    #- name: Build snap
-    #  uses: snapcore/action-build@v1
-    #  id: build
+    - name: Build snap
+      uses: snapcore/action-build@v1
+      id: build
       
-    #- name: Publish snap
-    #  uses: snapcore/action-publish@v1
-    #  env:
-    #    SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
-    #  with:
-    #    snap: ${{ steps.build.outputs.snap }}
-    #    release: edge
+    - name: Publish snap
+      uses: snapcore/action-publish@v1
+      env:
+        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
+      with:
+        snap: ${{ steps.build.outputs.snap }}
+        release: edge
 
