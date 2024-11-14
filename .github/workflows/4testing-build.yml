@@ -1,6 +1,16 @@
 name: Build and publish
 
-on: push
+on:
+  workflow_dispatch:
+    inputs:
+      build:
+        description: 'Build number'
+        type: string
+        required: true
+      version:
+        type: string
+        description: 'Version'
+        default: "0"
 
 jobs:
   build:
